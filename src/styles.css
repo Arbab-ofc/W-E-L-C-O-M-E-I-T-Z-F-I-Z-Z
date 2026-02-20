@@ -1,0 +1,232 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;600;700&display=swap");
+
+:root {
+  color-scheme: light;
+  font-family: "Space Grotesk", "Sora", sans-serif;
+  --bg: #d9d9d9;
+  --bg-dark: #c9c9c9;
+  --ink: #0e0e0f;
+  --muted: #595959;
+  --lime: #e5f76b;
+  --sky: #8bc8ff;
+  --tangerine: #f28c4f;
+  --charcoal: #2b2b2f;
+  --card-radius: 22px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% 20%, #f1f1f1 0%, var(--bg) 50%, var(--bg-dark) 100%);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 6vh 6vw 10vh;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(circle at 10% 70%, rgba(255, 255, 255, 0.4), transparent 65%);
+  z-index: 0;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.12'/></svg>");
+  opacity: 0.18;
+  mix-blend-mode: soft-light;
+  z-index: 0;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  width: min(1200px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4vh;
+}
+
+.headline {
+  font-family: "Sora", "Space Grotesk", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: clamp(1.6rem, 3.5vw, 4rem);
+  text-align: center;
+  line-height: 1.1;
+}
+
+.char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.stats {
+  width: 100%;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: var(--card-radius);
+  padding: 1.5rem 1.6rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.stat-card.lime {
+  background: var(--lime);
+}
+
+.stat-card.ink {
+  background: var(--charcoal);
+  color: #f7f7f7;
+}
+
+.stat-card.sky {
+  background: var(--sky);
+}
+
+.stat-card.tangerine {
+  background: var(--tangerine);
+}
+
+.stat-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.hero-visual {
+  position: absolute;
+  inset: auto 0 8vh 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.hero-visual img {
+  width: min(780px, 90vw);
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.18));
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 3vh;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+}
+
+.scroll-line {
+  width: 48px;
+  height: 1px;
+  background: var(--muted);
+}
+
+.dummy {
+  padding: 8vh 8vw 12vh;
+  background: #f3f3f3;
+}
+
+.dummy-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.dummy h2 {
+  font-size: clamp(2rem, 3vw, 3rem);
+  margin: 0;
+}
+
+.dummy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.dummy-card {
+  background: white;
+  border-radius: 18px;
+  padding: 1.4rem 1.5rem;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.06);
+}
+
+.dummy-card h3 {
+  margin-top: 0;
+}
+
+.dummy-copy {
+  display: grid;
+  gap: 1rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 720px) {
+  .hero {
+    padding: 7vh 6vw 14vh;
+  }
+
+  .hero-visual {
+    inset: auto 0 10vh 0;
+  }
+
+  .scroll-indicator {
+    letter-spacing: 0.2em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
