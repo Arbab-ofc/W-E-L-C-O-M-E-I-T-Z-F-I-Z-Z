@@ -47,7 +47,7 @@ export default function Hero() {
         // Intro animation on load.
         gsap.set(headlineChars, { opacity: 0, y: 18 });
         gsap.set(statCards, { opacity: 0, y: 20 });
-        gsap.set(visualRef.current, { opacity: 0, y: 24, scale: 0.98 });
+        gsap.set(visualRef.current, { opacity: 0, y: 24, scale: 0.98, x: -120 });
 
         const intro = gsap.timeline({
           defaults: { ease: "power3.out", duration: 0.9 },
@@ -87,14 +87,18 @@ export default function Hero() {
             pin: true,
           },
         })
-        // Visual glides diagonally with slight scale + rotation.
-        .to(visualRef.current, {
-          x: 120,
-          y: -60,
-          scale: 1.08,
-          rotate: -2,
-          ease: "none",
-        })
+        // Visual glides horizontally with slight scale + rotation.
+        .fromTo(
+          visualRef.current,
+          { x: -140, y: 0, scale: 1, rotate: 0 },
+          {
+            x: 160,
+            y: 0,
+            scale: 1.06,
+            rotate: -1.5,
+            ease: "none",
+          }
+        )
         // Headline drifts up and softens.
         .to(
           headlineRef.current,
