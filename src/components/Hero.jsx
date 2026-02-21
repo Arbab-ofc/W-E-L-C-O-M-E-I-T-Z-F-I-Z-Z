@@ -7,6 +7,7 @@ import heroVisual from "../assets/hero-visual.png";
 gsap.registerPlugin(ScrollTrigger);
 
 const HEADLINE = "W E L C O M E  I T Z  F I Z Z";
+const HEADLINE_WORDS = ["WELCOME", "ITZFIZZ"];
 
 const STATS = [
   { value: "58%", label: "Increase in pick up point use", tone: "lime" },
@@ -18,9 +19,9 @@ const STATS = [
 export default function Hero() {
   const heroRef = useRef(null);
   const headlineRef = useRef(null);
-  const statsRef = useRef(null);
   const visualRef = useRef(null);
   const trackRef = useRef(null);
+  const trackFillRef = useRef(null);
 
   useLayoutEffect(() => {
     const prefersReduced = window.matchMedia(
@@ -32,7 +33,7 @@ export default function Hero() {
         headlineRef.current.querySelectorAll(".char")
       );
       const statCards = gsap.utils.toArray(
-        statsRef.current.querySelectorAll(".stat-card")
+        heroRef.current.querySelectorAll(".stat-card")
       );
 
       const VISIBLE_EDGE = 80;
@@ -62,6 +63,8 @@ export default function Hero() {
           scale: 1,
           rotate: 0,
         });
+        gsap.set(trackFillRef.current, { scaleX: 0 });
+        gsap.set(headlineRef.current, { "--reveal": "0%" });
       } else {
         // Intro animation on load.
         gsap.set(headlineChars, { opacity: 0, y: 18 });
@@ -72,6 +75,8 @@ export default function Hero() {
           x: () => -(getCarWidth() - VISIBLE_EDGE),
           yPercent: -50,
         });
+        gsap.set(trackFillRef.current, { scaleX: 0, transformOrigin: "left center" });
+        gsap.set(headlineRef.current, { "--reveal": "0%" });
 
         const intro = gsap.timeline({
           defaults: { ease: "power3.out", duration: 0.9 },
@@ -118,14 +123,19 @@ export default function Hero() {
           },
           0
         )
-        // Track turns green as the car moves forward.
+        // Track fill grows as the car moves forward.
+        .to(
+          trackFillRef.current,
+          {
+            scaleX: 1,
+            ease: "none",
+          },
+          0
+        )
         .to(
           headlineRef.current,
           {
-            backgroundColor: "#3ecf5a",
-            borderColor: "#2ea84a",
-            boxShadow: "inset 0 0 0 1px rgba(0, 0, 0, 0.15)",
-            color: "#0a0f0a",
+            "--reveal": "100%",
             ease: "none",
           },
           0
@@ -140,13 +150,29 @@ export default function Hero() {
   return (
     <section className="hero" ref={heroRef}>
       <div className="hero-inner">
+        <div className="stats stats-top">
+          <StatsRow stats={STATS.slice(0, 2)} />
+        </div>
+
         <div className="track" ref={trackRef}>
           <div className="headline" ref={headlineRef} aria-label={HEADLINE}>
-            {HEADLINE.split("").map((char, index) => (
-              <span className="char" key={`${char}-${index}`}>
-                {char === " " ? "\u00A0" : char}
+            <span className="track-fill" ref={trackFillRef} aria-hidden="true" />
+            <span className="headline-text" aria-hidden="true">
+              <span className="headline-word">
+                {HEADLINE_WORDS[0].split("").map((char, index) => (
+                  <span className="char" key={`w1-${char}-${index}`}>
+                    {char}
+                  </span>
+                ))}
               </span>
-            ))}
+              <span className="headline-word gap">
+                {HEADLINE_WORDS[1].split("").map((char, index) => (
+                  <span className="char" key={`w2-${char}-${index}`}>
+                    {char}
+                  </span>
+                ))}
+              </span>
+            </span>
           </div>
 
           <div className="hero-visual" ref={visualRef} aria-hidden="true">
@@ -154,13 +180,8 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="stats" ref={statsRef}>
-          <StatsRow stats={STATS} />
-        </div>
-
-        <div className="scroll-indicator">
-          <span>Scroll</span>
-          <div className="scroll-line" />
+        <div className="stats stats-bottom">
+          <StatsRow stats={STATS.slice(2)} />
         </div>
       </div>
     </section>

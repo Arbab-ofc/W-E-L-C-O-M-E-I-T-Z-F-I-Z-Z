@@ -1,6 +1,6 @@
-export default function StatsRow({ stats }) {
+export default function StatsRow({ stats, className = "" }) {
   return (
-    <div className="stats-row" role="list">
+    <div className={`stats-row ${className}`} role="list">
       {stats.map((stat) => (
         <div className={`stat-card ${stat.tone}`} role="listitem" key={stat.value}>
           <div className="stat-value">{stat.value}</div>
