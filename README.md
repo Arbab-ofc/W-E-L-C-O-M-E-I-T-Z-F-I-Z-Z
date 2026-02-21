@@ -15,6 +15,9 @@
   <a href="https://github.com/Arbab-ofc/W-E-L-C-O-M-E-I-T-Z-F-I-Z-Z">
     <img src="https://img.shields.io/badge/Repo-View%20on%20GitHub-0b0f0b?style=for-the-badge" />
   </a>
+  <a href="https://arbab-ofc.github.io/W-E-L-C-O-M-E-I-T-Z-F-I-Z-Z/">
+    <img src="https://img.shields.io/badge/Live%20Site-Open-45db7d?style=for-the-badge" />
+  </a>
 </p>
 
 </div>
