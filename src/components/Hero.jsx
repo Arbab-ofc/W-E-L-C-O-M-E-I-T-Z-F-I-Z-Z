@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StatsRow from "./StatsRow.jsx";
-import heroVisual from "../assets/hero-visual.svg";
+import heroVisual from "../assets/hero-visual.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,6 +40,7 @@ export default function Hero() {
           opacity: 1,
           y: 0,
           x: 0,
+          xPercent: 0,
           scale: 1,
           rotate: 0,
         });
@@ -47,7 +48,7 @@ export default function Hero() {
         // Intro animation on load.
         gsap.set(headlineChars, { opacity: 0, y: 18 });
         gsap.set(statCards, { opacity: 0, y: 20 });
-        gsap.set(visualRef.current, { opacity: 0, y: 24, scale: 0.98, x: -120 });
+        gsap.set(visualRef.current, { opacity: 0, xPercent: -100 });
 
         const intro = gsap.timeline({
           defaults: { ease: "power3.out", duration: 0.9 },
@@ -59,11 +60,7 @@ export default function Hero() {
             y: 0,
             stagger: 0.025,
           })
-          .to(
-            visualRef.current,
-            { opacity: 1, y: 0, scale: 1 },
-            "-=0.4"
-          )
+          .to(visualRef.current, { opacity: 1 }, "-=0.4")
           .to(
             statCards,
             {
@@ -87,15 +84,12 @@ export default function Hero() {
             pin: true,
           },
         })
-        // Visual glides horizontally with slight scale + rotation.
+        // Visual glides horizontally only (no vertical shift or rotation).
         .fromTo(
           visualRef.current,
-          { x: -140, y: 0, scale: 1, rotate: 0 },
+          { xPercent: -68 },
           {
-            x: 160,
-            y: 0,
-            scale: 1.06,
-            rotate: -1.5,
+            xPercent: 68,
             ease: "none",
           }
         )

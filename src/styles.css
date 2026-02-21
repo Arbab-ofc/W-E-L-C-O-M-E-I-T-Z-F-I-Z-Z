@@ -141,7 +141,7 @@ body {
 }
 
 .hero-visual img {
-  width: min(780px, 90vw);
+  width: min(520px, 72vw);
   filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.18));
 }
 
@@ -161,49 +161,6 @@ body {
   width: 48px;
   height: 1px;
   background: var(--muted);
-}
-
-.dummy {
-  padding: 8vh 8vw 12vh;
-  background: #f3f3f3;
-}
-
-.dummy-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.dummy h2 {
-  font-size: clamp(2rem, 3vw, 3rem);
-  margin: 0;
-}
-
-.dummy-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.2rem;
-}
-
-.dummy-card {
-  background: white;
-  border-radius: 18px;
-  padding: 1.4rem 1.5rem;
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.06);
-}
-
-.dummy-card h3 {
-  margin-top: 0;
-}
-
-.dummy-copy {
-  display: grid;
-  gap: 1rem;
-  color: var(--muted);
-  font-size: 1.05rem;
-  line-height: 1.7;
 }
 
 @media (max-width: 720px) {
