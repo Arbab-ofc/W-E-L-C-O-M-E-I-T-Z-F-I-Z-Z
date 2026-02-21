@@ -53,7 +53,6 @@ export default function Hero() {
       };
 
       if (prefersReduced) {
-        // Reduced motion: show everything immediately.
         gsap.set([headlineChars, statCards, visualRef.current], {
           opacity: 1,
           y: 0,
@@ -66,9 +65,7 @@ export default function Hero() {
         gsap.set(trackFillRef.current, { scaleX: 0 });
         gsap.set(headlineRef.current, { "--reveal": "0%" });
       } else {
-        // Intro animation on load.
         gsap.set(headlineChars, { opacity: 0, y: 18 });
-        // Stats should appear when the car starts moving.
         gsap.set(statCards, { opacity: 0, y: 20 });
         gsap.set(visualRef.current, {
           opacity: 0,
@@ -91,7 +88,6 @@ export default function Hero() {
           .to(visualRef.current, { opacity: 1 }, "-=0.4");
       }
 
-      // Scroll-linked animation for the hero section.
       gsap
         .timeline({
           scrollTrigger: {
@@ -102,7 +98,6 @@ export default function Hero() {
             pin: true,
           },
         })
-        // Visual glides horizontally only (no vertical shift or rotation).
         .fromTo(
           visualRef.current,
           { x: () => -(getCarWidth() - VISIBLE_EDGE) },
@@ -111,7 +106,6 @@ export default function Hero() {
             ease: "none",
           }
         )
-        // Reveal stats one by one as the car starts moving.
         .to(
           statCards,
           {
@@ -123,7 +117,6 @@ export default function Hero() {
           },
           0
         )
-        // Track fill grows as the car moves forward.
         .to(
           trackFillRef.current,
           {
@@ -140,10 +133,8 @@ export default function Hero() {
           },
           0
         )
-        // Keep track static during scroll.
     }, heroRef);
 
-    // Cleanup ScrollTriggers + animations on unmount.
     return () => ctx.revert();
   }, []);
 
