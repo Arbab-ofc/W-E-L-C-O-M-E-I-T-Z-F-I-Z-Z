@@ -20,6 +20,7 @@ export default function Hero() {
   const headlineRef = useRef(null);
   const statsRef = useRef(null);
   const visualRef = useRef(null);
+  const trackRef = useRef(null);
 
   useLayoutEffect(() => {
     const prefersReduced = window.matchMedia(
@@ -34,6 +35,22 @@ export default function Hero() {
         statsRef.current.querySelectorAll(".stat-card")
       );
 
+      const VISIBLE_EDGE = 80;
+      const getCarWidth = () => {
+        if (!visualRef.current) {
+          return 0;
+        }
+        return visualRef.current.clientWidth;
+      };
+
+      const getEndX = () => {
+        if (!trackRef.current || !visualRef.current) {
+          return 0;
+        }
+        const trackWidth = trackRef.current.clientWidth;
+        return Math.max(0, trackWidth - VISIBLE_EDGE);
+      };
+
       if (prefersReduced) {
         // Reduced motion: show everything immediately.
         gsap.set([headlineChars, statCards, visualRef.current], {
@@ -41,14 +58,20 @@ export default function Hero() {
           y: 0,
           x: 0,
           xPercent: 0,
+          yPercent: -50,
           scale: 1,
           rotate: 0,
         });
       } else {
         // Intro animation on load.
         gsap.set(headlineChars, { opacity: 0, y: 18 });
+        // Stats should appear when the car starts moving.
         gsap.set(statCards, { opacity: 0, y: 20 });
-        gsap.set(visualRef.current, { opacity: 0, xPercent: -100 });
+        gsap.set(visualRef.current, {
+          opacity: 0,
+          x: () => -(getCarWidth() - VISIBLE_EDGE),
+          yPercent: -50,
+        });
 
         const intro = gsap.timeline({
           defaults: { ease: "power3.out", duration: 0.9 },
@@ -60,17 +83,7 @@ export default function Hero() {
             y: 0,
             stagger: 0.025,
           })
-          .to(visualRef.current, { opacity: 1 }, "-=0.4")
-          .to(
-            statCards,
-            {
-              opacity: 1,
-              y: 0,
-              stagger: 0.12,
-              duration: 0.7,
-            },
-            "-=0.35"
-          );
+          .to(visualRef.current, { opacity: 1 }, "-=0.4");
       }
 
       // Scroll-linked animation for the hero section.
@@ -87,32 +100,37 @@ export default function Hero() {
         // Visual glides horizontally only (no vertical shift or rotation).
         .fromTo(
           visualRef.current,
-          { xPercent: -68 },
+          { x: () => -(getCarWidth() - VISIBLE_EDGE) },
           {
-            xPercent: 68,
+            x: () => getEndX(),
             ease: "none",
           }
         )
-        // Headline drifts up and softens.
+        // Reveal stats one by one as the car starts moving.
+        .to(
+          statCards,
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.1,
+            duration: 0.3,
+            ease: "power2.out",
+          },
+          0
+        )
+        // Track turns green as the car moves forward.
         .to(
           headlineRef.current,
           {
-            y: -28,
-            opacity: 0.7,
+            backgroundColor: "#3ecf5a",
+            borderColor: "#2ea84a",
+            boxShadow: "inset 0 0 0 1px rgba(0, 0, 0, 0.15)",
+            color: "#0a0f0a",
             ease: "none",
           },
           0
         )
-        // Stats drift downward and soften.
-        .to(
-          statsRef.current,
-          {
-            y: 24,
-            opacity: 0.65,
-            ease: "none",
-          },
-          0
-        );
+        // Keep track static during scroll.
     }, heroRef);
 
     // Cleanup ScrollTriggers + animations on unmount.
@@ -122,20 +140,22 @@ export default function Hero() {
   return (
     <section className="hero" ref={heroRef}>
       <div className="hero-inner">
-        <div className="headline" ref={headlineRef} aria-label={HEADLINE}>
-          {HEADLINE.split("").map((char, index) => (
-            <span className="char" key={`${char}-${index}`}>
-              {char === " " ? "\u00A0" : char}
-            </span>
-          ))}
+        <div className="track" ref={trackRef}>
+          <div className="headline" ref={headlineRef} aria-label={HEADLINE}>
+            {HEADLINE.split("").map((char, index) => (
+              <span className="char" key={`${char}-${index}`}>
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </div>
+
+          <div className="hero-visual" ref={visualRef} aria-hidden="true">
+            <img src={heroVisual} alt="Stylized car" />
+          </div>
         </div>
 
         <div className="stats" ref={statsRef}>
           <StatsRow stats={STATS} />
-        </div>
-
-        <div className="hero-visual" ref={visualRef} aria-hidden="true">
-          <img src={heroVisual} alt="Stylized car" />
         </div>
 
         <div className="scroll-indicator">
