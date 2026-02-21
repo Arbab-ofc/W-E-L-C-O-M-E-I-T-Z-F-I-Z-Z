@@ -94,7 +94,7 @@ cd W-E-L-C-O-M-E-I-T-Z-F-I-Z-Z
 npm install
 ```
 
-### Run
+### Run (Development)
 
 ```
 npm run dev
@@ -111,6 +111,26 @@ npm run build
 ```
 npm run preview
 ```
+
+## Deploy (GitHub Pages)
+
+### One‑time Setup
+
+```
+npm install --save-dev gh-pages
+```
+
+### Deploy
+
+```
+npm run build
+npm run deploy
+```
+
+### GitHub Pages Settings
+
+- Repo → Settings → Pages
+- Source: `gh-pages` / `/ (root)`
 
 ## Customization
 
