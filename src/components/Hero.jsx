@@ -11,9 +11,9 @@ const HEADLINE_WORDS = ["WELCOME", "ITZFIZZ"];
 
 const STATS = [
   { value: "58%", label: "Increase in pick up point use", tone: "lime" },
-  { value: "27%", label: "Increase in repeat drop-offs", tone: "ink" },
+  { value: "27%", label: "Increase in pick up point use", tone: "ink" },
   { value: "23%", label: "Decrease in customer phone calls", tone: "sky" },
-  { value: "40%", label: "Decrease in support tickets", tone: "tangerine" },
+  { value: "40%", label: "Decrease in customer phone calls", tone: "tangerine" },
 ];
 
 export default function Hero() {

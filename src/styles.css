@@ -110,7 +110,7 @@ body {
 .track-fill {
   position: absolute;
   inset: 0;
-  background: #3ecf5a;
+  background: rgb(69, 219, 125);
   z-index: 0;
   transform: scaleX(0);
   transform-origin: left center;
